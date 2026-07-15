@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Flashcard App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="progress" id="progress-indicator">Card 1 of 5</div>
+
+        <div class="card">
+            <div class="question" id="question-text">Question loading...</div>
+            <div class="answer" id="answer-text" style="display: none;">Answer loading...</div>
+        </div>
+
+        <div class="button-group">
+            <button id="btn-show">Show Answer</button>
+            <button id="btn-next">Next Card</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
