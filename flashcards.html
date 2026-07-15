@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Flashcard App</title>
+    <style>
+        /* Base styles to make the flashcard app look clean and centered */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .progress {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .card {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8fafc;
+            margin-bottom: 1.5rem;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .answer {
+            font-size: 1.25rem;
+            color: #27ae60;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: #e8f8f5;
+            border-radius: 6px;
+            border: 1px dashed #27ae60;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        #btn-show {
+            background-color: #3498db;
+            color: white;
+        }
+
+        #btn-show:hover {
+            background-color: #2980b9;
+        }
+
+        #btn-next {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        #btn-next:hover {
+            background-color: #1a252f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="progress" id="progress-indicator">Card 1 of 5</div>
+
+        <div class="card">
+            <div class="question" id="question-text">Question loading...</div>
+            <div class="answer" id="answer-text" style="display: none;">Answer loading...</div>
+        </div>
+
+        <div class="button-group">
+            <button id="btn-show">Show Answer</button>
+            <button id="btn-next">Next Card</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. App State: The deck of flashcards and current position
+        const flashcards = [
+            { q: "What does HTTP stand for?", a: "HyperText Transfer Protocol" },
+            { q: "What status code means 'Not Found'?", a: "404" },
+            { q: "What does CSS stand for?", a: "Cascading Style Sheets" },
+            { q: "What does DOM stand for?", a: "Document Object Model" },
+            { q: "What Python library do we use for HTTP requests?", a: "requests" }
+        ];
+
+        let currentIndex = 0;
+
+        // 2. DOM Elements Selection
+        const progressIndicator = document.getElementById("progress-indicator");
+        const questionText = document.getElementById("question-text");
+        const answerText = document.getElementById("answer-text");
+        const btnShow = document.getElementById("btn-show");
+        const btnNext = document.getElementById("btn-next");
+
+        // 3. Render function: Updates UI based on current index
+        function updateUI() {
+            const currentCard = flashcards[currentIndex];
+            
+            // Set Text Content
+            questionText.textContent = currentCard.q;
+            answerText.textContent = currentCard.a;
+            progressIndicator.textContent = `Card ${currentIndex + 1} of ${flashcards.length}`;
+            
+            // Always ensure the answer starts hidden on a new card
+            answerText.style.display = "none";
+        }
+
+        // 4. Event Listener: Show Answer
+        btnShow.addEventListener("click", () => {
+            answerText.style.display = "block";
+        });
+
+        // 5. Event Listener: Next Card (Loops back automatically using modulo)
+        btnNext.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % flashcards.length;
+            updateUI();
+        });
+
+        // Initialize the view with the first card immediately
+        updateUI();
+    </script>
+</body>
+</html>
